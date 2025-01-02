@@ -1,0 +1,61 @@
+# not really needed anymore
+# version: "3.8"
+
+# services: are the containers that will be created and run
+# you can call them anything you want
+services:
+  web:
+    depends_on:
+      - api
+    build: ./frontend
+    ports:
+      - 3000:3000
+    develop:
+      watch:
+        - path: ./frontend/package.json
+          action: rebuild
+        - path: ./frontend/package-lock.json
+          action: rebuild
+        - path:  ./frontend
+          target: /app
+          action: sync
+  api:
+    depends_on: 
+      - db
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      DB_URL: mongodb://db/vidly
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+
+volumes:
+  vidly:
+
+
+# build: is the path to the Dockerfile that will be used to build the image (homemade)
+# - you can see i dockerfiles in the frontend and backend folders that we are building it from an image
+
+# image: is the name of the image that will be used to create the container (dockerhub)
+
+# ports: is the port mapping between the host and the container
+
+# volumes: is so that the data is persisted even if the container is deleted and to other containers
+
+# depends_on: is the order in which the containers will be created and run
+
+# environment: is the environment variables that will be passed to the container
+
+# develop: is a feature of the docker-compose.yml file that allows you to watch for changes in the files and rebuild the image automatically
+
+# watch: is the files that will be watched for changes
+
+# action: is the action that will be taken when the files change
+
+# target: is the path is where the files will be copied to
+

@@ -1,0 +1,13 @@
+---
+name: power of docker
+price: 149.99
+is_published: true
+tags: 
+  - docker
+  - devops
+  - containerization
+author: 
+  name: timmy Doe
+  email: timmy@gmail.com
+
+
